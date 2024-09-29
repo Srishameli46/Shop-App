@@ -24,8 +24,8 @@ export function Login() {
                                     type="button">
                                     Sign In
                                 </button> */}
-                                <Button className="bg-cyan-500 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button"
-                                >Sign In</Button>
+                                <Button className="bg-cyan-500 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" childern="Sign In"
+                                ></Button>
                             </Link>
                             <a className="inline-block align-baseline font-bold text-sm text-cyan-500 hover:text-cyan-800"
                                 href="#">
