@@ -8,11 +8,11 @@ export function Home() {
           <div className="flex-column items-center justify-content-center relative top-5 leading-10 w-screen">
             <img
               src={img}
-              className="w-screen h-80 rounded-lg shadow-lg object-fit"
+              className="w-screen h-96 rounded-lg shadow-lg object-fill"
               alt="Delicious Milkshakes"
             />
             <div className="m-5 flex flex-col items-center">
-              <h2 className="text-3xl font-bold mt-4 text-blue-700 font-mono">Enjoy Our Delicious Milkshakes!</h2>
+              <h2 className="text-3xl font-bold text-blue-700 font-mono">Enjoy Our Delicious Milkshakes!</h2>
               <p className="text-gray-600 mt-2">
                 Freshly made, creamy milkshakes in a variety of flavors. Indulge yourself!
               </p>
