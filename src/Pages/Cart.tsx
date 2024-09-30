@@ -1,51 +1,57 @@
 import React from "react";
 import { useCart } from "../util/CartContext"; // Importing the cart context
 import { useNavigate } from "react-router-dom";
+import { Button } from "../Components/Button";
 interface Product {
   id: number;
   name: string;
   description: string;
   price: number;
-  image: string
+  image: string;
+  quantity?:number|0
 }
+
 export function Cart() {
-  const { cart, removeFromCart } = useCart();
-  const totalAmount = cart.reduce((total, product) => total + product.price, 0);
+  const { cart ,addToCart,updateCartItemQuantity} = useCart();
+  const totalAmount = cart.reduce((total, product) => total + (product.price * (product.quantity || 0)), 0);
   const navigate = useNavigate();
 
 
   return (
     <>
-      <div className="flex">
-        <button onClick={() => navigate(-1)} type="button" className="w-24 h-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 ms-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 mx-5 mt-16">Go Back</button>
-        <div className="container mx-auto px-5 py-10 mt-5">
-          <h1 className="text-4xl font-bold text-center text-blue-700 mb-10">Your Cart</h1>
-          {cart.length === 0 ? (
-            <p className="text-lg text-gray-700 text-center">Your cart is empty!</p>
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-              {cart.map((item: Product) => (
-                <div key={item.id} className="bg-white rounded-lg shadow-lg p-5 text-center">
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="w-full h-48 object-cover rounded-md mb-4"
-                  />
-                  <h2 className="text-2xl font-bold text-blue-600 mb-2">{item.name}</h2>
-                  <p className="text-xl font-semibold text-blue-700 mb-6">{item.price}</p>
 
-                  <button
-                    onClick={() => removeFromCart(item.id)}
-                    className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded focus:outline-none focus:ring-4 focus:ring-red-300">
-                    Remove
-                  </button>
+      <div className="container mx-auto px-4 py-8 mt-5">
+        <div className="flex flex-col md:flex-row md:justify-between md:items-center">
+          <h1 className="text-2xl font-bold my-4">Shopping Cart</h1>
+          <Button onClick={() => navigate(-1)} className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded" children="Checkout"></Button>
+        </div>
+
+        {cart.map((product: Product) => (
+          <div className="mt-8">
+          <div className="flex flex-col md:flex-row border-b border-gray-400 py-4">
+            <div className="flex-shrink-0">
+              <img src={product.image} alt="Product image" className="w-32 h-32 object-cover" />
+            </div>
+            <div className="mt-4 md:mt-0 md:ml-6">
+              <h2 className="text-lg font-bold">{product.name}</h2>
+              <p className="mt-2 text-gray-600">Product Description</p>
+              <div className="mt-4 flex items-center">
+                <span className="mr-2 text-gray-600">Quantity:</span>
+                <div className="flex items-center">
+                  <button className="bg-gray-200 rounded-l-lg px-2 py-1" onClick={()=>updateCartItemQuantity(product.id,product.quantity||0)}>-</button>
+                  <span className="mx-2 text-gray-600">{product.quantity}</span>
+                  <button className="bg-gray-200 rounded-r-lg px-2 py-1" onClick={()=>addToCart(product)}>+</button>
                 </div>
-              ))}
-              <div className="mt-6 p-4 bg-blue-100 rounded-lg shadow-lg text-center">
-                <h2 className="text-2xl font-bold text-blue-700">Total Amount: Rs {totalAmount}</h2>
+                <span className="ml-auto font-bold">Rs:{product.price}</span>
               </div>
             </div>
-          )}
+          </div>
+        </div>
+      ))}
+        
+        <div className="flex justify-end items-center mt-8">
+          <span className="text-gray-600 mr-4">Subtotal:</span>
+          <span className="text-xl font-bold">Rs : {totalAmount}</span>
         </div>
       </div>
     </>
