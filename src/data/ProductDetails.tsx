@@ -4,14 +4,8 @@ import strawberry from "../assets/images/stawberry.jpg"
 import kitkat from "../assets/images/Kitkat-milkshake.jpg"
 import coco from "../assets/images/coco.jpg"
 import pie from "../assets/images/pie.jpg"
+import { Product } from "../types/product"
 
-interface Product {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-  image: string; 
-}
 export const products :Product[]= [
   {
     id: 1,

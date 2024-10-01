@@ -26,7 +26,7 @@ export function About() {
 
         <h2 className="text-2xl font-semibold text-blue-600 mb-4">Why Choose Us?</h2>
 
-        <ul className="list-none list-inside text-left mx-auto max-w-xl">
+        <ul className="list-disc list-inside text-left mx-auto max-w-xl">
           <li>Locally sourced ingredients</li>
           <li>Freshly made to order milkshakes</li>
           <li>A wide variety of flavors and toppings</li>

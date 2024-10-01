@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
-
 import { Button } from "../Components/Button";
-import { useCart } from "../util/CartContext";
+import { useCart } from "../context/CartContext";
 import { CartIcon } from "../Components/CartIcon";
 
 export function Product() {
@@ -23,7 +22,7 @@ export function Product() {
             <p className="text-xl font-semibold text-sky-950 mb-6">Rs: {product.price}</p>
             <div className="flex gap-4">
               <Button onClick={() => addToCart(product)}
-                className="bg-green-400 hover:bg-green-600 text-white font-medium py-2 px-4 rounded focus:outline-none focus:ring-4 focus:ring-green-300 mb-4" children="Add to Cart">
+                className="bg-sky-400 hover:bg-sky-600 text-white font-medium py-2 px-4 rounded focus:outline-none focus:ring-4 focus:ring-sky-300 mb-4" children="Add to Cart">
               </Button>
               <Link to={`/products/${product.id}`}>
                 <Button className="bg-cyan-800 hover:bg-cyan-900 text-white font-medium py-2 px-4 rounded focus:outline-none focus:ring-4 focus:ring-blue-300" children="View Product"></Button>
@@ -32,18 +31,7 @@ export function Product() {
           </div>
         ))}
       </div>
-
       <CartIcon cartItemCount={cartItemCount}></CartIcon>
-      {/* <div className="fixed bottom-4 right-4">
-        <Link to="/cart" className="relative">
-          <FontAwesomeIcon icon={faShoppingCart} className="text-3xl text-black-700 rounded-full border-bg-black"/>
-          {cartItemCount > 0 && (
-            <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
-              {cartItemCount}
-            </span>
-          )}
-        </Link>
-      </div> */}
     </div>
   );
 }

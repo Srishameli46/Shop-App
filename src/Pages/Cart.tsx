@@ -1,5 +1,5 @@
 import React from "react";
-import { useCart } from "../util/CartContext"; // Importing the cart context
+import { useCart } from "../context/CartContext"; // Importing the cart context
 import { useNavigate } from "react-router-dom";
 import { Button } from "../Components/Button";
 interface Product {
@@ -13,9 +13,16 @@ interface Product {
 
 export function Cart() {
   const { cart, addToCart, updateCartItemQuantity } = useCart();
-  const tax = 10.89;
+
   const totalAmount = cart.reduce((total, product) => total + (product.price * (product.quantity || 0)), 0);
   const navigate = useNavigate();
+  const calTax = (totalAmount: number) => {
+    if (totalAmount === 0) {
+      return 0;
+    } else {
+      return 10.89;
+    }
+  }
 
   return (
     <>
@@ -53,8 +60,9 @@ export function Cart() {
                       <Button
                         className="bg-gray-200 rounded-l-lg px-2 py-1"
                         children="-"
-                        onClick={() =>
+                        onClick={() => {
                           updateCartItemQuantity(product.id, product.quantity || 0)
+                        }
                         }
                       />
                       <span className="mx-2 text-gray-600">{product.quantity}</span>
@@ -83,14 +91,14 @@ export function Cart() {
                 </div>
                 <div className="flex justify-between mb-2">
                   <span>Taxes</span>
-                  <span>Rs.{tax}</span>
+                  <span>Rs.{calTax(totalAmount)}</span>
                 </div>
                 <hr className="my-2" />
                 <div className="flex justify-between mb-2">
                   <span className="font-semibold">Total</span>
-                  <span className="font-semibold">Rs.{totalAmount + tax}</span>
+                  <span className="font-semibold">Rs.{totalAmount + calTax(totalAmount)}</span>
                 </div>
-                <button className="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 w-full">Payment</button>
+                <Button className="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 w-full" children="Payment"></Button>
               </div>
             </div>
           </div>

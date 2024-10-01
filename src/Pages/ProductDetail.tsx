@@ -1,5 +1,5 @@
-import { useNavigate, useParams,Link } from "react-router-dom"
-import { useCart } from "../util/CartContext";
+import { useNavigate, useParams } from "react-router-dom"
+import { useCart } from "../context/CartContext";
 import { Button } from "../Components/Button";
 import { CartIcon } from "../Components/CartIcon";
 
@@ -11,14 +11,18 @@ interface Product {
   image: string
   quantity?: number | 0
 }
+
 export function ProductDetail() {
 
   const { productId } = useParams();
   const navigate = useNavigate();
   const { product, addToCart, cart } = useCart();
   const cartItemCount = cart.length;
-  const item: Product = product.find(productDetail =>
+  const item = product.find(productDetail =>
     String(productDetail.id) === productId)
+    if(!item){
+      throw new Error("Item may be empty")
+    }
 
   return (<>
     <div className="mt-10 flex gap-96">
@@ -41,8 +45,6 @@ export function ProductDetail() {
         </div>
       </div>
       <CartIcon cartItemCount={cartItemCount}></CartIcon>
-
     </div>
-
   </>)
 }
