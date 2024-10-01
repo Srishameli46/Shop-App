@@ -39,19 +39,15 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const updateCartItemQuantity = (id: number, quantity: number) => {
-    console.log(id);
-    quantity = quantity-1;
-    console.log(quantity);
-  
+  const updateCartItemQuantity = (id: number, quantity: number) => { 
     setCart(cart.map(item =>
-      item.id === id ? { ...item, quantity } : item
+      item.id === id ? { ...item, quantity:quantity-1 } : item
     ));
   };
 
   
   return (
-    <CartContext.Provider value={{ cart, addToCart, product,updateCartItemQuantity }}>
+    <CartContext.Provider value={{ cart, addToCart, product, updateCartItemQuantity }}>
       {children}
     </CartContext.Provider>
   )

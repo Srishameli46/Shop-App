@@ -6,6 +6,7 @@ import { About } from '../Pages/About';
 import { Product } from '../Pages/Product';
 import { Cart } from '../Pages/Cart';
 import { CartProvider } from '../util/CartContext';
+import { ProductDetail } from '../Pages/ProductDetail';
 
 
 function Router() {
@@ -20,6 +21,7 @@ function Router() {
             <Route path='home' element={<Home/>} />
             <Route path='about' element={<About/>}/>
             <Route path='products' element={<Product/>} />
+            <Route path='products/:productId' element={<ProductDetail/>}/>
             <Route path='cart' element={<Cart/>}/>
           </Route>
         </Routes>
