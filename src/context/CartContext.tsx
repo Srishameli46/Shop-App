@@ -42,11 +42,9 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   const updateCartItemQuantity = (id: number, quantity: number) => {
     setCart(cart.map(item =>
-      item.id === id && quantity >= 1 ? { ...item, quantity: quantity - 1 } : item
+      item.id === id ? { ...item, quantity: quantity - 1 } : item
     )
       .filter((item) => item.id !== id || quantity > 1));
-
-
   };
 
   const removeItem = (id: number) => {

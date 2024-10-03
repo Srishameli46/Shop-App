@@ -33,7 +33,7 @@ export function Login() {
                         className="w-full h-full object-cover filter blur-lg brightness-50" />
                 </div>
                 <div className="relative z-10 bg-white p-8 rounded-md shadow-lg">
-                    <h1 className="text-xl font-bold mb-4">Login</h1>
+                    <h1 className="text-xl font-bold mb-4 text-center">Login</h1>
                     <form action="#" method="POST">
                         <Input id="email" label="Email" type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
                         <div className="text-red-500 mb-3">{errorEmail}</div>

@@ -6,13 +6,13 @@ import coco from "../assets/images/coco.jpg"
 import pie from "../assets/images/pie.jpg"
 import { Product } from "../types/product"
 
-export const products :Product[]= [
+export const products: Product[] = [
   {
     id: 1,
     name: "CLASSIC VANILLA MILKSHAKE",
     description: "A rich and creamy classic vanilla milkshake made with premium vanilla beans.",
     price: 90,
-    image:vanilla ,
+    image: vanilla,
   },
   {
     id: 2,
@@ -33,20 +33,20 @@ export const products :Product[]= [
     name: "COCO",
     description: "A delightful cocoa-flavored treat, crafted to satisfy your sweet tooth with a rich and creamy texture.",
     price: 250,
-    image:coco
+    image: coco
   },
   {
     id: 5,
     name: "KIK",
     description: "A burst of flavor in every bite, KIK is a compact treat perfect for snack lovers looking for a quick indulgence.",
-    price:230,
-    image:kitkat
+    price: 230,
+    image: kitkat
   },
   {
     id: 6,
     name: "PIE",
     description: "A soft and flaky pie filled with a mouthwatering mixture of fruit and cream, offering a perfect balance of taste and texture.",
     price: 270,
-    image:pie
+    image: pie
   }
 ];
