@@ -2,13 +2,15 @@ import { useCart } from "../context/CartContext";
 import { Product } from "../types/product";
 import { Button } from "./Button";
 
-export function CartItem() {
-  const { cart, addToCart, updateCartItemQuantity } = useCart();
-
+interface Props {
+  cart: Product[];
+}
+export function CartItem({ cart }: Props) {
+  const { addToCart, updateCartItemQuantity } = useCart();
 
   return (
     <>
-      {cart.map((product: Product) => (
+      {cart.map((product) => (
         <div key={product.id} className="mt-8">
           <div className="flex flex-col md:flex-row border-b border-gray-400 py-4">
             <div className="flex-shrink-0">
@@ -25,26 +27,29 @@ export function CartItem() {
                 <span className="mr-2 text-gray-600">Quantity:</span>
                 <div className="flex items-center">
                   <Button
-                    className="bg-white rounded-l-lg px-2 py-1 shadow-md"
+                    className="px-2"
                     children="-"
                     onClick={() => {
-                      updateCartItemQuantity(product.id, product.quantity || 0)
-                    }
-                    }
+                      updateCartItemQuantity(product.id, product.quantity);
+                    }}
+                    varient="Secondary"
                   />
                   <span className="mx-2 text-gray-600">{product.quantity}</span>
                   <Button
-                    className="bg-white rounded-l-lg px-2 py-1 shadow-md"
+                    className="px-2"
                     children="+"
                     onClick={() => addToCart(product)}
+                    varient="Secondary"
                   />
                 </div>
-                <span className="mx-3 font-bold">Rs:{product.price}</span>
+                <span className="mx-3 font-bold">
+                  Rs.{product.price * (product.quantity)}
+                </span>
               </div>
             </div>
           </div>
         </div>
       ))}
     </>
-  )
+  );
 }
