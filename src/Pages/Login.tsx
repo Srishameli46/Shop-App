@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { Input } from "../Components/Input";
 import { Button } from "../Components/Button";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import AuthContext, { useAuth } from "../context/Authcontext";
 
 export function Login() {
   const [email, setEmail] = useState<String>("");
@@ -10,9 +11,10 @@ export function Login() {
   const [errorPassword, setErrorPassword] = useState<String>("");
   const navigate = useNavigate();
 
+  const authentication = useContext(AuthContext);
+  const {login} = authentication;
+
   const handleLogin = () => {
-    console.log("fghj" + email + "dfg");
-    console.log(password);
     if (email == "" && password == "") {
       setErrorEmail("Email is required.");
       setErrorPassword("Password is required.");
@@ -24,6 +26,16 @@ export function Login() {
       navigate("/home");
     }
   };
+
+  const handleAuth = (e: React.FormEvent) =>{
+    e.preventDefault();
+    if(email === 'Shameli@gmail.com' && password === '123'){
+        login();
+        navigate("/home")
+    } else {
+        handleLogin()
+    }
+  }
 
   return (
     <>
@@ -37,7 +49,7 @@ export function Login() {
         </div>
         <div className="relative z-10 bg-white p-8 rounded-md shadow-lg">
           <h1 className="text-xl font-bold mb-4 text-center">Login</h1>
-          <form action="#" method="POST">
+          <form action="#" method="POST" onSubmit={handleAuth}>
             <Input
               id="email"
               label="Email"
@@ -57,9 +69,8 @@ export function Login() {
             <div className="flex items-center justify-between gap-8">
               <Button
                 className="bg-cyan-500 hover:bg-cyan-700 py-2 "
-                type="button"
+                type="submit"
                 children="Sign In"
-                onClick={handleLogin}
               ></Button>
               <a
                 className="inline-block align-baseline font-bold text-sm text-cyan-500 hover:text-cyan-800"
