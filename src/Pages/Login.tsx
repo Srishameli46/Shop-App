@@ -2,7 +2,9 @@ import { useNavigate } from "react-router-dom";
 import { Input } from "../Components/Input";
 import { Button } from "../Components/Button";
 import { useContext, useState } from "react";
-import AuthContext, { useAuth } from "../context/Authcontext";
+import { HOME } from "../util/constants";
+import { AuthContext } from "../context/Authcontext";
+import { Type } from "../enum/enum";
 
 export function Login() {
   const [email, setEmail] = useState<String>("");
@@ -12,7 +14,7 @@ export function Login() {
   const navigate = useNavigate();
 
   const authentication = useContext(AuthContext);
-  const {login} = authentication;
+  const {loginState, loginDispatch} = authentication;
 
   const handleLogin = () => {
     if (email == "" && password == "") {
@@ -23,15 +25,15 @@ export function Login() {
     } else if (password == "") {
       setErrorPassword("Password field is required.");
     } else {
-      navigate("/home");
+      navigate(`/${HOME}`);
     }
   };
 
   const handleAuth = (e: React.FormEvent) =>{
     e.preventDefault();
     if(email === 'Shameli@gmail.com' && password === '123'){
-        login();
-        navigate("/home")
+        loginDispatch({type:Type.LOGIN})
+        navigate(`/${HOME}`)
     } else {
         handleLogin()
     }

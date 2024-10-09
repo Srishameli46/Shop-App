@@ -1,16 +1,22 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../Components/Button";
 import { useCart } from "../context/CartContext";
-import { CartIcon } from "../Components/CartICount";
+import { CartCount } from "../Components/CartICount";
 import { useMemo } from "react";
-// import { Product } from "../types/product";
+import { CART, PRODUCT } from "../util/constants";
+import { ProductType } from "../types/appTypes";
+import { Type } from "../enum/enum";
 
 export function Product() {
-  const { addToCart, cart, product } = useCart();
-  const navigate = useNavigate()
+  const { state, dispatch } = useCart();
+  const navigate = useNavigate();
   const cartItemCount = useMemo(() => {
-    return cart.length;
-  }, [cart]);
+    return state.cart.length;
+  }, [state.cart]);
+
+  const addToCart = (product:ProductType) =>{
+    dispatch({type:Type.ADD_TO_CART, payload:product})
+  }
 
   return (
     <div className="bg-teal-50">
@@ -19,7 +25,7 @@ export function Product() {
           Our Milkshake Menu
         </h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-          {product.map((product) => (
+          {state.product.map((product) => (
             <div
               key={product.id}
               className="bg-white rounded-lg shadow-lg p-5 text-center"
@@ -37,11 +43,13 @@ export function Product() {
               </p>
               <div className="flex gap-4">
                 <Button
-                  onClick={() => {addToCart(product), navigate("/cart")}}
+                  onClick={() => {
+                    addToCart(product), navigate(`/${CART}`);
+                  }}
                   className="bg-sky-400 hover:bg-sky-600 py-2 mb-4"
                   children="Add to Cart"
                 ></Button>
-                <Link to={`/products/${product.id}`}>
+                <Link to={`/${PRODUCT}/${product.id}`}>
                   <Button
                     className="bg-cyan-800 hover:bg-cyan-900 py-2"
                     children="View Product"
@@ -51,7 +59,7 @@ export function Product() {
             </div>
           ))}
         </div>
-        <CartIcon cartItemCount={cartItemCount}></CartIcon>
+        <CartCount cartItemCount={cartItemCount}></CartCount>
       </div>
     </div>
   );

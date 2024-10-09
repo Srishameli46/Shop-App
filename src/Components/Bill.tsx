@@ -1,15 +1,22 @@
 import { useMemo } from "react";
 import { Button } from "./Button";
-import { Product } from "../types/product";
+import { ProductType } from "../types/appTypes";
+import { useNavigate } from "react-router-dom";
+import { useCart } from "../context/CartContext";
+import { CART, PAYMENT } from "../util/constants";
+import { Type } from "../enum/enum";
 
 interface Props {
-  cart: Product[];
+  cart: ProductType[];
 }
+
 export function Bill({ cart }: Props) {
+  const { dispatch } = useCart();
+
   const totalAmount = useMemo(() => {
     let total = 0;
     cart.map((item) => {
-      total += item.price * (item.quantity);
+      total += item.price * item.quantity;
     });
     return total;
   }, [cart]);
@@ -24,7 +31,14 @@ export function Bill({ cart }: Props) {
 
   const totalBill = useMemo(() => {
     return totalAmount + calculateTax(totalAmount);
-  }, [totalAmount, calculateTax]);
+  }, [totalAmount]);
+
+  const navigate = useNavigate();
+
+  const removeCart = () =>{
+    dispatch({type:Type.REMOVE_CART})
+    navigate(`/${CART}/${PAYMENT}`);
+  }
 
   return (
     <>
@@ -47,7 +61,10 @@ export function Bill({ cart }: Props) {
             </div>
             <Button
               className="bg-blue-500 hover:bg-blue-700 py-2 mt-4 w-full"
-              children="Payment"
+              children="Payment & Shipping"
+              onClick={() => {
+                removeCart();
+              }}
             ></Button>
           </div>
         </div>

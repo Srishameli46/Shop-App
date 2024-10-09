@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import img from "../assets/images/TAS-Banner-2-resize-up.jpg";
 import { Button } from "../Components/Button";
+import { PRODUCT } from "../util/constants";
+
 export function Home() {
   return (
     <>
@@ -20,7 +22,7 @@ export function Home() {
                 Freshly made, creamy milkshakes in a variety of flavors. Indulge
                 yourself!
               </p>
-              <Link to="/products">
+              <Link to={`/${PRODUCT}`}>
                 <Button
                   type="button"
                   className="bg-blue-700 hover:bg-blue-800 mt-4"

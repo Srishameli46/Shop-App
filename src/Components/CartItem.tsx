@@ -1,12 +1,21 @@
 import { useCart } from "../context/CartContext";
-import { Product } from "../types/product";
+import { Type } from "../enum/enum";
+import { ProductType } from "../types/appTypes";
 import { Button } from "./Button";
 
 interface Props {
-  cart: Product[];
+  cart: ProductType[];
 }
 export function CartItem({ cart }: Props) {
-  const { addToCart, updateCartItemQuantity } = useCart();
+  const { dispatch } = useCart();
+
+  const addToCart = (product:ProductType) =>{
+    dispatch({type:Type.ADD_TO_CART, payload:product})
+  }
+
+  const updateCartItemQuantity = (id:number, quantity:number) =>{
+    dispatch({type:Type.UPDATE_CART, payload:{id, quantity}})
+  }
 
   return (
     <>
@@ -29,9 +38,9 @@ export function CartItem({ cart }: Props) {
                   <Button
                     className="px-2"
                     children="-"
-                    onClick={() => {
-                      updateCartItemQuantity(product.id, product.quantity);
-                    }}
+                    onClick={() =>
+                      updateCartItemQuantity(product.id, product.quantity)
+                    }
                     varient="Secondary"
                   />
                   <span className="mx-2 text-gray-600">{product.quantity}</span>
@@ -43,7 +52,7 @@ export function CartItem({ cart }: Props) {
                   />
                 </div>
                 <span className="mx-3 font-bold">
-                  Rs.{product.price * (product.quantity)}
+                  Rs.{product.price * product.quantity}
                 </span>
               </div>
             </div>

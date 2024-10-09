@@ -15,6 +15,8 @@ import { CartProvider } from "../context/CartContext";
 import { ProductDetail } from "../Pages/ProductDetail";
 import { Authprovider } from "../context/Authcontext";
 import { PrivateRouter } from "./PrivateRouter";
+import { Order } from "../Pages/Order";
+import { ABOUT, CART, HOME, LOGIN, PAYMENT, PRODUCT, PRODUCTID } from "../util/constants";
 
 function Router() {
   return (
@@ -23,18 +25,19 @@ function Router() {
         <Authprovider>
           <CartProvider>
             <Routes>
-              <Route path="/login" element={<Login />} />
-              <Route index element={<Navigate to={"/login"} />} />
+              <Route path={LOGIN} element={<Login />} />
+              <Route index element={<Navigate to={LOGIN} />} />
               <Route element={<PrivateRouter />}>
                 <Route path="/" element={<Layout />}>
-                  <Route path="home" element={<Home />} />
-                  <Route path="about" element={<About />} />
-                  <Route path="products" element={<Product />} />
+                  <Route path={HOME} element={<Home />} />
+                  <Route path={ABOUT}element={<About />} />
+                  <Route path={PRODUCT} element={<Product />} />
                   <Route
-                    path="products/:productId"
+                    path={PRODUCTID}
                     element={<ProductDetail />}
                   />
-                  <Route path="cart" element={<Cart />} />
+                  <Route path={CART} element={<Cart />} />
+                  <Route path={`${CART}/${PAYMENT}`} element={<Order />} />
                 </Route>
               </Route>
             </Routes>

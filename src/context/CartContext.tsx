@@ -1,62 +1,35 @@
-import { createContext, ReactNode, useContext, useState } from "react";
+import React, {
+  createContext,
+  ReactNode,
+  useContext,
+  useReducer
+} from "react";
 import { products } from "../data/ProductDetails";
-import { Product } from "../types/product";
+import { cartReducer } from "../reducer/cartReducer";
+import { Action, CartState } from "../types/appTypes";
 
-const CartContextData = {
-  cart: [
-    { id: 0, name: "", description: "", price: 0, image: "", quantity: 0 },
-  ],
-  addToCart: (product: Product) => {},
-  product: [
-    { id: 0, name: "", description: "", price: 0, image: "", quantity: 0 },
-  ],
-  updateCartItemQuantity: (id: number, quantity: number) => {},
+const initialState: CartState = {
+  product: products,
+  cart: [],
+};
+
+interface CartConextDate {
+  state: CartState;
+  dispatch: React.Dispatch<Action>
+}
+
+const CartContextData: CartConextDate = {
+  state: initialState,
+  dispatch: ()=> null
 };
 
 const CartContext = createContext(CartContextData);
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
-  const [cart, setCart] = useState<Product[]>([]);
-  const [product, setProduct] = useState<Product[]>(products);
-
-  const addToCart = (product: Product) => {
-    console.log("add");
-
-    let existingCartItem = cart.find((item) => item.id === product.id);
-    if (existingCartItem) {
-    console.log(existingCartItem)
-      setCart(
-        cart.map((item) =>
-          item.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        )
-      );
-    } else {
-      setCart([...cart, { ...product, quantity: 1 }]);  
-    }
-  };
-  console.log("------product",product);
-  
-  console.log("-------------cart",cart)
-
-  const updateCartItemQuantity = (id: number, quantity: number) => {
-    console.log("update");
-
-    setCart(
-      cart
-        .map((item) =>
-          item.id === id ? { ...item, quantity: quantity - 1 } : item
-        )
-        .filter((item) => item.id !== id || quantity > 1)
-    );
-
-  };
+  const [state, dispatch] = useReducer(cartReducer, initialState);
 
   return (
-    <CartContext.Provider
-      value={{ cart, addToCart, product, updateCartItemQuantity }}
-    >
+    <CartContext.Provider value={{ state, dispatch }}>
       {children}
     </CartContext.Provider>
   );

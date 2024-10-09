@@ -1,0 +1,7 @@
+export enum Type {
+  ADD_TO_CART = "ADD_TO_CART",
+  UPDATE_CART = "UPDATE_CART",
+  REMOVE_CART = "REMOVE_ITEM",
+  LOGIN = "LOGIN",
+  LOGOUT = "LOGOUT"
+}
